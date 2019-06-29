@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Ensure there are some data
                 if (blob.size >= 1000) {
+                  console.log(blob)
                   client.socket.emit('recognize', blob)
                 }
               })

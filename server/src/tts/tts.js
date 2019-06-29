@@ -67,12 +67,12 @@ class Tts {
       /* istanbul ignore next */
       const bitmap = fs.readFileSync(file)
       /* istanbul ignore next */
-      this.socket.emit('audio-forwarded', {
+      this.socket.emit('audio_forwarded', {
         buffer: Buffer.from(bitmap),
         is_final_answer: speech.isFinalAnswer,
         duration
       }, (confirmation) => {
-        if (confirmation === 'audio-received') {
+        if (confirmation === 'audio_received') {
           fs.unlinkSync(file)
         }
       })

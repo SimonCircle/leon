@@ -60,7 +60,7 @@ class Stt {
   forward (string) {
     this.socket.emit('recognized', string, (confirmation) => {
       /* istanbul ignore next */
-      if (confirmation === 'string-received') {
+      if (confirmation === 'string_received') {
         Stt.deleteAudios()
       }
     })

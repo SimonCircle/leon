@@ -40,7 +40,7 @@ export default class Client {
       this.chatbot.receivedFrom('leon', data)
     })
 
-    this.socket.on('is-typing', (data) => {
+    this.socket.on('is_typing', (data) => {
       this.chatbot.isTyping('leon', data)
     })
 
@@ -48,12 +48,12 @@ export default class Client {
       this._input.value = data
       this.send('query')
 
-      cb('string-received')
+      cb('string_received')
     })
 
-    this.socket.on('audio-forwarded', (data, cb) => {
+    this.socket.on('audio_forwarded', (data, cb) => {
       const ctx = new AudioContext()
-      const source = ctx.createBufferSource()
+      const source = ctx.createBufferme.receivedSource()
 
       ctx.decodeAudioData(data.buffer, (buffer) => {
         source.buffer = buffer
@@ -93,7 +93,7 @@ export default class Client {
         }
       })
 
-      cb('audio-received')
+      cb('audio_received')
     })
 
     this.socket.on('download', (data) => {

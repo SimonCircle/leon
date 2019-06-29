@@ -30,7 +30,7 @@ class Asr {
   run (blob, stt) {
     return new Promise((resolve, reject) => {
       log.title('ASR')
-      
+
       this.blob = blob
 
       fs.writeFile(audios.webm, Buffer.from(this.blob), 'binary', (err) => {
@@ -49,7 +49,7 @@ class Asr {
         ffmpeg.addInput(audios.webm)
           .on('start', () => {
             log.info('Encoding WebM file to WAVE file...')
-          })
+        })
           .on('end', () => {
             log.success('Encoding done')
 

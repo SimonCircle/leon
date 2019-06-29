@@ -4,6 +4,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import socketio from 'socket.io'
 import path from 'path'
+import fs from 'fs'
 
 import { version } from '@@/package.json'
 import { langs } from '@@/core/langs.json'
@@ -120,6 +121,8 @@ class Server {
 
       // Init
       socket.on('init', async (data) => {
+        console.log('init')
+        console.log(data)
         log.info(`Type: ${data}`)
         log.info(`Socket id: ${socket.id}`)
 
@@ -161,17 +164,30 @@ class Server {
 
           // Listen for new query
           socket.on('query', async (data) => {
+            console.log('query')
+            console.log(data)
             log.title('Socket')
             log.info(`${data.client} emitted: ${data.value}`)
 
-            socket.emit('is-typing', true)
+            socket.emit('is_typing', true)
             await nlu.process(data.value)
           })
 
-          // Handle automatic speech recognition
+          // Handle automatic speech recognition - webm
           socket.on('recognize', async (data) => {
             try {
               await asr.run(data, stt)
+            } catch (e) {
+              log[e.type](e.obj.message)
+            }
+          })
+
+          // Handle automatic speech recognition - wav
+          socket.on('recognize_wav', async (data) => {
+            try {
+              fs.writeFileSync('/home/simon/GIT/leon/server/dist/tmp/speech.wav', Buffer.from(data))
+
+              await stt.parse('/home/simon/GIT/leon/server/dist/tmp/speech.wav')
             } catch (e) {
               log[e.type](e.obj.message)
             }
